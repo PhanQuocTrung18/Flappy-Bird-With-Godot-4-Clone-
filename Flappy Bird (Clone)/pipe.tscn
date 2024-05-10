@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3 uid="uid://r44wsa55ex3a"]
+
+[ext_resource type="Script" path="res://Pipe.gd" id="1_02iax"]
+[ext_resource type="Texture2D" uid="uid://de2eqcigjc3q2" path="res://assets/Tiles/Style 1/PipeStyle1.png" id="2_q46cm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c3386"]
+size = Vector2(80, 704)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m1gfp"]
+size = Vector2(72, 692)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_awd1s"]
+size = Vector2(16, 240)
+
+[node name="Pipe" type="Node2D"]
+script = ExtResource("1_02iax")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(32, 884)
+
+[node name="TopArea" type="Area2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="TopSprite" type="Sprite2D" parent="TopArea"]
+position = Vector2(48, 56)
+scale = Vector2(2.75, 8.9)
+texture = ExtResource("2_q46cm")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopArea"]
+position = Vector2(48, 56)
+shape = SubResource("RectangleShape2D_c3386")
+
+[node name="BottomArea" type="Area2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Bottom" type="Sprite2D" parent="BottomArea"]
+position = Vector2(44, 992)
+scale = Vector2(2.75, 8.7)
+texture = ExtResource("2_q46cm")
+region_enabled = true
+region_rect = Rect2(0, 80, 32, 80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomArea"]
+position = Vector2(44, 990)
+shape = SubResource("RectangleShape2D_m1gfp")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(104, 528)
+shape = SubResource("RectangleShape2D_awd1s")
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="body_entered" from="TopArea" to="." method="_on_top_area_body_entered"]
+[connection signal="body_entered" from="BottomArea" to="." method="_on_bottom_area_body_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
